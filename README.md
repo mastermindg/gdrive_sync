@@ -5,10 +5,9 @@ Docker container that syncs a folder to Google Drive
 Follow the following steps:
 
 ## 1) Enable Google Drive API
-Go here[https://console.developers.google.com/apis/library/drive.googleapis.com/?q=drive] and click Enable
+Go [here](https://console.developers.google.com/apis/library/drive.googleapis.com/?q=drive) and click Enable
 
 ## 2) Create a Token
-Go here[https://console.developers.google.com/apis/credentials] 
 1. Go to the [credentials page](https://console.developers.google.com/apis/credentials) in the Google Developer Console.
 1. Create a new project, or select an existing project.<br>
 ![](https://raw.githubusercontent.com/gimite/google-drive-ruby/master/doc/images/create_project.png)
@@ -27,4 +26,5 @@ Go here[https://console.developers.google.com/apis/credentials]
 
    ```
 
-## 3) Start the container
+## 3) Start the container with firstrun
+
