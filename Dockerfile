@@ -11,11 +11,12 @@ RUN apt-get update && apt-get install -qq -y \
  	vim \
 && rm -rf /var/lib/apt/lists/*
 
+RUN mkdir /files
+VOLUME /files
+
 WORKDIR /root
 COPY Gemfile .
 RUN bundle
 ADD . .
-RUN mkdir /files
-VOLUME /files
 
 CMD ruby /root/gdrive_sync.rb
