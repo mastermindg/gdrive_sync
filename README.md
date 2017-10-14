@@ -1,6 +1,6 @@
 # gdrive_sync
 
-Docker container that syncs a folder to Google Drive
+Docker container that syncs a folder to Google Drive on a Rasperry PI. Container is built for ARM.
 
 Follow the following steps:
 
