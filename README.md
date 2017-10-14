@@ -26,5 +26,16 @@ Go [here](https://console.developers.google.com/apis/library/drive.googleapis.co
 
    ```
 
-## 3) Start the container with firstrun
 
+## 3) Build the container
+
+```
+docker build -t gdrive_sync .
+```
+
+## 4) Start the container with firstrun
+
+```
+docker run gdrive_sync ruby firstrun.rb
+docker cp gdrive_sync:/root/config.json .
+```
