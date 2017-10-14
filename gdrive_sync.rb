@@ -14,9 +14,9 @@ def uploadFile(file,foldersync,googlefolder)
   filename = File.basename(file)
   uploaded = session.upload_from_file("#{foldersync}/#{filename}", filename, convert: false)
   unless googlefolder.nil?
-    session.collection_by_title("Plex Cloud Sync").add(file)
+    session.collection_by_title("Plex Cloud Sync").add(uploaded)
   end
-  session.root_collection.remove(file)
+  session.root_collection.remove(uploaded)
   File.delete("#{foldersync}/#{filename}")
 end
 
