@@ -18,7 +18,7 @@ function checkforfolder {
 		read subfolder
 		echo $subfolder
 		sed -i '$ d' config.json
-		echo e "\t$subfolder\n}" >> config.json
+		echo -e "\t/"subfolder/": /"$subfolder/"\n}" >> config.json
 	fi
 }
 
