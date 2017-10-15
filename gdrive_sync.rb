@@ -4,6 +4,7 @@ require 'json'
 # Get the Google Drive subfolder to upload files to
 config = File.read('config.json')
 googlefolder = JSON.parse(config)['subfolder']
+puts googlefolder
 
 foldersync = '/files'
 
