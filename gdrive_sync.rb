@@ -4,7 +4,6 @@ require 'json'
 # Get the Google Drive subfolder to upload files to
 config = File.read('config.json')
 googlefolder = JSON.parse(config)['subfolder']
-puts googlefolder
 
 foldersync = '/files'
 
@@ -29,7 +28,7 @@ def uploadFile(file,foldersync,googlefolder)
     uploaded = session.upload_from_file("#{foldersync}/#{basename}", basename, convert: false)
     unless googlefolder.nil?
       puts "\tMoving it to #{googlefolder}" 
-      session.collection_by_title("Plex Cloud Sync").add(uploaded)
+      session.collection_by_title(googlefolder).add(uploaded)
     end
     session.root_collection.remove(uploaded)
     File.delete("#{foldersync}/#{basename}")
