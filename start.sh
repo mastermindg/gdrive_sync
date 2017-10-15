@@ -30,7 +30,7 @@ function checkforfolder {
 }
 
 function startit {
-	echo "You're config is all set!"
+	echo "Let's start it!"
 	docker run -d --name gdrive_sync -v $PWD/files:/files gdrive_sync > /dev/null 2>&1
 }
 
