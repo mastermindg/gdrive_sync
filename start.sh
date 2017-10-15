@@ -39,9 +39,9 @@ else
 fi
 
 if [ $? -eq 0 ]; then
-	echo "Docker image has been built"
+	echo -e "\tDocker image has been built"
 else
-	echo "Somthing went wrong with the build"
+	echo -e "\tSomthing went wrong with the build"
 	issues
 fi
 
