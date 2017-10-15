@@ -63,6 +63,7 @@ grep -q "refresh_token" config.json
 if [ $? -eq 0 ]; then
 	echo "You're config is all set! Starting the container..."
 	checkforfolder
+	exit
 	docker run -d --name gdrive_sync -v $PWD/files:/files gdrive_sync > /dev/null 2>&1
 else
 	echo "You need to authenticate to get started..."
@@ -71,9 +72,6 @@ else
 	grep -q "refresh_token" config.json
 	if [ $? -eq 0 ]; then
 		echo "You're config is all set!"
-		echo "Type the year that you want to check (4 digits), followed by [ENTER]:"
-		read year
-
 		docker run -d --name gdrive_sync -v $PWD/files:/files gdrive_sync > /dev/null 2>&1
 	else
 		issues
