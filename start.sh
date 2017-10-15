@@ -29,28 +29,36 @@ function checkforfolder {
 	fi
 }
 
+function startit {
+	echo "You're config is all set!"
+	docker run -d --name gdrive_sync -v $PWD/files:/files gdrive_sync > /dev/null 2>&1
+}
+
+function buildit {
+	# Build - check architecture
+	uname -a | grep -q armv
+	if [ $? -eq 0 ]; then
+		echo "You're running on ARM. Let's build an image for you..."
+		docker build -f Dockerfile.arm -t gdrive_sync . > /dev/null 2>&1
+	else
+		echo "You're running on x86. Let's build an image for you..."
+		docker build -f Dockerfile.x86 -t gdrive_sync . > /dev/null 2>&1
+	fi
+
+	if [ $? -eq 0 ]; then
+		echo -e "\tDocker image has been built"
+	else
+		echo -e "\tSomthing went wrong with the build"
+		issues
+	fi
+}
+
+
 # Check for config.json
 if [ ! -f config.json ]; then
 	echo "config.json doesn't exist...We need this to get moving"
 	echo "Follow the README and create the config.json from the credentials page"
 	exit 1
-fi
-
-# Build - check architecture
-uname -a | grep -q armv
-if [ $? -eq 0 ]; then
-	echo "You're running on ARM. Let's build an image for you..."
-	docker build -f Dockerfile.arm -t gdrive_sync . > /dev/null 2>&1
-else
-	echo "You're running on x86. Let's build an image for you..."
-	docker build -f Dockerfile.x86 -t gdrive_sync . > /dev/null 2>&1
-fi
-
-if [ $? -eq 0 ]; then
-	echo -e "\tDocker image has been built"
-else
-	echo -e "\tSomthing went wrong with the build"
-	issues
 fi
 
 # Cleanup jic
@@ -61,17 +69,19 @@ docker rm gdrive_sync > /dev/null 2>&1
 # Check if config.json has been updated by first run
 grep -q "refresh_token" config.json
 if [ $? -eq 0 ]; then
-	echo "You're config is all set! Starting the container..."
+	echo "You're config is all set! Let's continue..."
 	checkforfolder
-	docker run -d --name gdrive_sync -v $PWD/files:/files gdrive_sync > /dev/null 2>&1
+	buildit
+	startit
 else
 	echo "You need to authenticate to get started..."
 	docker run -it --rm -v $PWD/config.json:/root/config.json gdrive_sync ruby firstrun.rb
 	echo "Great...let's check the config again jic"
 	grep -q "refresh_token" config.json
 	if [ $? -eq 0 ]; then
-		echo "You're config is all set!"
-		docker run -d --name gdrive_sync -v $PWD/files:/files gdrive_sync > /dev/null 2>&1
+		checkforfolder
+		buildit
+		startit
 	else
 		issues
 	fi
