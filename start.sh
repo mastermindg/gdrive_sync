@@ -31,10 +31,10 @@ fi
 # Build - check architecture
 uname -a | grep -q armv
 if [ $? -eq 0 ]; then
-	echo "You're running on ARM"
+	echo "You're running on ARM. Let's build an image for you..."
 	docker build -f Dockerfile.arm -t gdrive_sync . > /dev/null 2>&1
 else
-	echo "You're running on x86"
+	echo "You're running on x86. Let's build an image for you..."
 	docker build -f Dockerfile.x86 -t gdrive_sync . > /dev/null 2>&1
 fi
 
