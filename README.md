@@ -36,7 +36,7 @@ Go [here](https://console.developers.google.com/apis/library/drive.googleapis.co
 
 ## 3) Get Started!
 
-The start.sh script will make sure you're ready to go. Follow the on-screen instructions to get going.
+The start.sh script will make sure you're ready to go. Follow the on-screen instructions to get going. You'll need to authenticate against your account so be prepared to open up a browser window.
 
 ```
 ./start.sh
