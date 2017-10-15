@@ -44,8 +44,8 @@ loop do
   files = Dir["#{foldersync}/*"]
   unless files.count == 0
     files.each do |file|
-      puts "Uploading file #{file} if it's ready"
-      uploadFile(file,foldersync,googlefolder) 
+      puts "\t\tUploading file #{file} if it's ready"
+      uploadFile(file,foldersync,googlefolder)
     end
   end 
   sleep 5

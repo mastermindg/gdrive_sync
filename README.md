@@ -34,15 +34,10 @@ Go [here](https://console.developers.google.com/apis/library/drive.googleapis.co
    ```
 
 
-## 3) Build the container
+## 3) Get Started!
+
+The start.sh script will make sure you're ready to go. Follow the on-screen instructions to get going.
 
 ```
-
-```
-
-## 4) Start the container with firstrun
-
-```
-docker run gdrive_sync ruby firstrun.rb
-docker cp gdrive_sync:/root/config.json .
+./start.sh
 ```
