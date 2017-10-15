@@ -10,18 +10,20 @@ function issues {
 function checkforfolder {
 	if [ ! -f nosubfolder ]; then
 		grep -q subfolder config.json
-		echo "Do you want to upload to a specific folder in your Google Drive? ( Y for Yes, N for No):"
-		read answer
-		if [ "$answer" == "N" ] || [ "$answer" == "n" ]; then
-			echo "OK...we won't ask you again"
-			touch nosubfolder
-		else
-			echo "Which folder would you like to upload to?:"
-			read subfolder
-			sed -i '$ d' config.json
-			echo -e "  \x22subfolder\x22: \x22$subfolder\x22\n}" >> config.json
-			echo "Make sure to add the folder in your Google Drive if it's not already there."
-			echo "Files will be dropped in the root of your drive if the folder isn't there!"
+		if [ $? -ne 0 ]; then
+			echo "Do you want to upload to a specific folder in your Google Drive? ( Y for Yes, N for No):"
+			read answer
+			if [ "$answer" == "N" ] || [ "$answer" == "n" ]; then
+				echo "OK...we won't ask you again"
+				touch nosubfolder
+			else
+				echo "Which folder would you like to upload to?:"
+				read subfolder
+				sed -i '$ d' config.json
+				echo -e "  \x22subfolder\x22: \x22$subfolder\x22\n}" >> config.json
+				echo "Make sure to add the folder in your Google Drive if it's not already there."
+				echo "Files will be dropped in the root of your drive if the folder isn't there!"
+			fi
 		fi
 	fi
 }
