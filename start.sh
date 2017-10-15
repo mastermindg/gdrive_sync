@@ -33,7 +33,11 @@ function startit {
 	echo "Let's get ready to start it!"
 	echo "Which folder do you want to sync to Google Drive?: i.e. /myshare/files"
 	read myfolder
-	docker run -d --name gdrive_sync -v $myfolder:/files gdrive_sync > /dev/null 2>&1
+	if [ -d $myfolder ]; then
+		docker run -d --name gdrive_sync -v $myfolder:/files gdrive_sync > /dev/null 2>&1
+	else
+		echo "Please start over and pick a valid path. $myfolder doesn't exist"
+	fi
 }
 
 function buildit {
