@@ -40,7 +40,7 @@ end
 puts 'Starting the script...'
 
 loop do
-  puts '\tChecking for new files...'
+  puts "\tChecking for new files..."
   files = Dir["#{foldersync}/*"]
   unless files.count == 0
     files.each do |file|
@@ -48,6 +48,6 @@ loop do
       uploadFile(file,foldersync,googlefolder) 
     end
   end 
-  sleep 1
+  sleep 5
 end
 
