@@ -36,7 +36,7 @@ Go [here](https://console.developers.google.com/apis/library/drive.googleapis.co
 
 ## 3) Get Started!
 
-The start.sh script will make sure you're ready to go. Follow the on-screen instructions to get going. You'll need to authenticate against your account so be prepared to open up a browser window.
+The start.sh script will make sure you're ready to go. Follow the on-screen instructions to get going. You'll need to authenticate against your account so be prepared to open up a browser window. Once you're ready you'll need to pick a folder to mount to the container. This folder will be where you're downloading files to, i.e. /myshare/files
 
 ```
 ./start.sh
