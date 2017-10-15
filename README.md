@@ -16,11 +16,15 @@ Go [here](https://console.developers.google.com/apis/library/drive.googleapis.co
 ## 3) Create a Token
 1. Click "Create credentials" -> "OAuth client ID".<br>
 ![](https://raw.githubusercontent.com/gimite/google-drive-ruby/master/doc/images/oauth_client_id.png)
-1. Choose "Other" for "Application type".<br>
+1. Choose "Other UI" for "Application type".<br>
 ![](https://raw.githubusercontent.com/gimite/google-drive-ruby/master/doc/images/app_type_other.png)
-1. Click "Create" and take note of the generated client ID and client secret.
-1. Activate the Drive API for your project in the [Google API Console](https://console.developers.google.com/apis/library).
-1. Create a file config.json which contains the client ID and client secret you got above, which looks like:
+1. Choose User data for "What data will you be accessing?"
+1. Click "What credentials do I need?"
+1. Click "Create client ID"
+1. Enter a Product Name for "Product name shows to users"
+1. Click Done
+1. Click the client ID in the list - i.e. "Other client 1"
+1. Create a file config.json which contains the client ID and client secret from the page that you're on now, which looks like:
    ```
    {
      "client_id": "xxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com",
