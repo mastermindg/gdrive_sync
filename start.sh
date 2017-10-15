@@ -69,7 +69,7 @@ docker rm gdrive_sync > /dev/null 2>&1
 # Check if config.json has been updated by first run
 grep -q "refresh_token" config.json
 if [ $? -eq 0 ]; then
-	echo "You're config is all set! Let's continue..."
+	echo "Your config is all set! Let's continue..."
 	checkforfolder
 	buildit
 	startit
