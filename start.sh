@@ -21,6 +21,7 @@ function checkforfolder {
 				read subfolder
 				sed -i '$ d' config.json
 				echo -e "  \x22subfolder\x22: \x22$subfolder\x22\n}" >> config.json
+				sed '/^refresh_token:/ s/$/ ,/' config.json
 				echo "Make sure to add the folder in your Google Drive if it's not already there."
 				echo "Files will be dropped in the root of your drive if the folder isn't there!"
 			fi
