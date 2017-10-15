@@ -8,17 +8,20 @@ function issues {
 
 # Check if subfolder is in the config for uploading to a specific folder
 function checkforfolder {
-	grep -q subfolder config.json
-	echo "Do you want to upload to a specific folder in your Google Drive? ( Y for Yes, N for No):"
-	read answer
-	if [ "$answer" == "N" ] || [ "$answer" == "n" ]; then
-		echo "OK...we won't ask you again"
-	else
-		echo "Which folder would you like to upload to?:"
-		read subfolder
-		echo $subfolder
-		sed -i '$ d' config.json
-		echo -e "  \x22subfolder\x22: \x22$subfolder\x22\n}" >> config.json
+	if [ ! -f nosubfolder ]; then
+		grep -q subfolder config.json
+		echo "Do you want to upload to a specific folder in your Google Drive? ( Y for Yes, N for No):"
+		read answer
+		if [ "$answer" == "N" ] || [ "$answer" == "n" ]; then
+			echo "OK...we won't ask you again"
+			touch nosubfolder
+		else
+			echo "Which folder would you like to upload to?:"
+			read subfolder
+			echo $subfolder
+			sed -i '$ d' config.json
+			echo -e "  \x22subfolder\x22: \x22$subfolder\x22\n}" >> config.json
+		fi
 	fi
 }
 
