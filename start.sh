@@ -82,6 +82,7 @@ if [ $? -eq 0 ]; then
 	startit
 else
 	echo "You need to authenticate to get started..."
+	buildit
 	docker run -it --rm -v $PWD/config.json:/root/config.json gdrive_sync ruby firstrun.rb
 	echo "Great...let's check the config again jic"
 	grep -q "refresh_token" config.json
