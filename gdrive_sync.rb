@@ -37,11 +37,14 @@ def uploadFile(file,foldersync,googlefolder)
   end
 end
 
+puts 'Starting the script...'
+
 loop do
-  puts 'Checking for new files...'
+  puts '\tChecking for new files...'
   files = Dir["#{foldersync}/*"]
   unless files.count == 0
     files.each do |file|
+      puts "Uploading file #{file} if it's ready"
       uploadFile(file,foldersync,googlefolder) 
     end
   end 
