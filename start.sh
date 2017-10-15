@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# Check for config.json
+if [ -f config.json ]; then
+	echo "It exists"
+fi
+
+exit
+
 # Check architecture
 uname -a | grep -q armv
 if [ $? -eq 0 ]; then

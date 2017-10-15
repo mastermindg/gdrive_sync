@@ -6,13 +6,14 @@ There are two builds - one for x86 and one for ARM.
 
 Follow the following steps:
 
-## 1) Enable Google Drive API
+## 1) Create a new project, or select an existing project
+Go to the [credentials page](https://console.developers.google.com/apis/credentials) in the Google Developer Console.
+![](https://raw.githubusercontent.com/gimite/google-drive-ruby/master/doc/images/create_project.png)
+
+## 2) Enable Google Drive API
 Go [here](https://console.developers.google.com/apis/library/drive.googleapis.com/?q=drive) and click Enable
 
-## 2) Create a Token
-1. Go to the [credentials page](https://console.developers.google.com/apis/credentials) in the Google Developer Console.
-1. Create a new project, or select an existing project.<br>
-![](https://raw.githubusercontent.com/gimite/google-drive-ruby/master/doc/images/create_project.png)
+## 3) Create a Token
 1. Click "Create credentials" -> "OAuth client ID".<br>
 ![](https://raw.githubusercontent.com/gimite/google-drive-ruby/master/doc/images/oauth_client_id.png)
 1. Choose "Other" for "Application type".<br>
@@ -32,7 +33,7 @@ Go [here](https://console.developers.google.com/apis/library/drive.googleapis.co
 ## 3) Build the container
 
 ```
-docker build -t gdrive_sync .
+
 ```
 
 ## 4) Start the container with firstrun
