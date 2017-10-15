@@ -40,7 +40,7 @@ end
 loop do
   puts 'Checking for new files...'
   files = Dir["#{foldersync}/*"]
-  unless files.count == 3
+  unless files.count == 0
     files.each do |file|
       uploadFile(file,foldersync,googlefolder) 
     end
