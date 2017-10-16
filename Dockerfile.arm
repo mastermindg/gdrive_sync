@@ -1,3 +1,8 @@
-FROM resin/armv7hf-debian
+FROM resin/armv7hf-debian-qemu
 
-RUN [ "/usr/bin/qemu-arm-static", "apt-get", "update" ]
+RUN [ "cross-build-start" ]
+
+RUN apt-get update && apt-get install -y \
+	build-essential
+
+RUN [ "cross-build-end" ]
