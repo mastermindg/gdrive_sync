@@ -5,6 +5,7 @@ RUN [ "cross-build-start" ]
 RUN apt-get update && apt-get install -qq -y \
 	build-essential \
 	patch \
+	ruby \
 	ruby-dev \
 	zlib1g-dev \
 	liblzma-dev \
@@ -19,7 +20,9 @@ VOLUME /files
 WORKDIR /root
 COPY Gemfile .
 COPY Gemfile.lock .
+RUN gem install bundler
+RUN bundle install
 
 RUN [ "cross-build-end" ]
 
-RUN ruby -v
+CMD ruby /root/gdrive_sync.rb
