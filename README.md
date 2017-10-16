@@ -2,7 +2,7 @@
 
 Docker container that syncs a folder to Google Drive.
 
-This works on ARM or Intel chipsets.
+There are two builds on Docker Hub: ARM and x86.
 
 Follow the following steps:
 

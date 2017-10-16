@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+uname -a | grep -q armv
+if [ $? -eq 0 ]; then
+	image="mastermindg/gdrive_sync:arm"
+else
+	image="mastermindg/gdrive_sync:x86"
+fi
+
 # Direct user to issues
 function issues {
 	echo "Something went wrong...create an issue here: https://github.com/mastermindg/gdrive_sync/issues"
@@ -34,7 +41,7 @@ function startit {
 	echo "Which folder do you want to sync to Google Drive?: i.e. /myshare/files"
 	read mymount
 	# Docker will create the path if it's not there
-	docker run -d --name gdrive_sync --restart always -v "$mymount":/files gdrive_sync #> /dev/null 2>&1
+	docker run -d --name gdrive_sync --restart always -v "$mymount":/files $image > /dev/null 2>&1
 }
 
 function buildit {
@@ -74,18 +81,18 @@ grep -q "refresh_token" config.json
 if [ $? -eq 0 ]; then
 	echo "Your config is all set! Let's continue..."
 	checkforfolder
-	buildit
+	#buildit
 	startit
 else
 	echo "You need to authenticate to get started..."
-	buildit
-	docker run -it --rm -v $PWD/config.json:/root/config.json gdrive_sync ruby firstrun.rb
+	#buildit
+	docker run -it --rm -v $PWD/config.json:/root/config.json $image ruby firstrun.rb
 	if [ $? -eq 0 ]; then
 		echo "Great...let's check the config again jic"
 		grep -q "refresh_token" config.json
 		if [ $? -eq 0 ]; then
 			checkforfolder
-			buildit
+			#buildit
 			startit
 		else
 			issues
