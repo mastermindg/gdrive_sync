@@ -7,6 +7,15 @@ googlefolder = JSON.parse(config)['subfolder']
 
 foldersync = '/files'
 
+# Checks if googlefolder exists and if not creates it
+def checkforGoogleFolder(googlefolder)
+  session = GoogleDrive::Session.from_config("config.json")
+  folder = session.collection_by_title(googlefolder)
+  if folder.nil?
+    session.root_collection.create_subcollection(googlefolder)
+  end
+end
+
 # Checks if a file has changed in the last 5 seconds
 def checkforChange(filepath)
   size1 = File.size(filepath)
@@ -27,7 +36,8 @@ def uploadFile(file,foldersync,googlefolder)
     puts "\tCopying #{file} to Google Drive"
     uploaded = session.upload_from_file("#{foldersync}/#{basename}", basename, convert: false)
     unless googlefolder.nil?
-      puts "\tMoving it to #{googlefolder}" 
+      puts "\tMoving it to #{googlefolder}"
+      checkforGoogleFolder(googlefolder)
       session.collection_by_title(googlefolder).add(uploaded)
     end
     session.root_collection.remove(uploaded)
