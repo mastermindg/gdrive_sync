@@ -47,14 +47,27 @@ def uploadFile(file,foldersync,googlefolder)
   end
 end
 
+# Recursively uploads a folder file by file
+def uploadFolder(folder,foldersync,googlefolder)
+  puts "Feature Pending"
+  #Create the collection
+  #uploadFile(file)
+end
+
 puts 'Starting the script...'
 
 loop do
   puts "\tChecking for new files..."
-  files = Dir["#{foldersync}/*"]
-  unless files.count == 0
+  entries = Dir["#{foldersync}/*"]
+  puts entries.inspect
+  unless entries.count == 0
+    folders = Dir.glob("#{foldersync}/*").select {|f| File.directory? f}
+    folders.each do |folder|
+      puts "\t\t#{folder} is a folder. Recursively uploading it if it's ready"
+      uploadFolder(folder,foldersync,googlefolder)
+    files = Dir.glob("#{foldersync}/*").select {|f| File.file? f}
     files.each do |file|
-      puts "\t\tUploading file #{file} if it's ready"
+    puts "\t\tUploading file #{file} if it's ready"
       uploadFile(file,foldersync,googlefolder)
     end
   end 
