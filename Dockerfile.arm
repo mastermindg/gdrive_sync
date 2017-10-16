@@ -19,10 +19,7 @@ VOLUME /files
 WORKDIR /root
 COPY Gemfile .
 COPY Gemfile.lock .
-RUN gem install bundler
-RUN bundle
-ADD . .
 
 RUN [ "cross-build-end" ]
 
-CMD ruby /root/gdrive_sync.rb
+RUN ruby -v
