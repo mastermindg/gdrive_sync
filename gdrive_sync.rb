@@ -65,9 +65,10 @@ loop do
     folders.each do |folder|
       puts "\t\t#{folder} is a folder. Recursively uploading it if it's ready"
       uploadFolder(folder,foldersync,googlefolder)
+    end
     files = Dir.glob("#{foldersync}/*").select {|f| File.file? f}
     files.each do |file|
-    puts "\t\tUploading file #{file} if it's ready"
+      puts "\t\tUploading file #{file} if it's ready"
       uploadFile(file,foldersync,googlefolder)
     end
   end 
