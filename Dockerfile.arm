@@ -19,6 +19,7 @@ VOLUME /files
 WORKDIR /root
 COPY Gemfile .
 COPY Gemfile.lock .
+RUN gem install bundler
 RUN bundle
 ADD . .
 
