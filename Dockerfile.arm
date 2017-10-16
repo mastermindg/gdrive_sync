@@ -1,4 +1,4 @@
-FROM mastermindg/rpi-ruby
+FROM mastermindg/docker-rpi-ruby
 
 RUN [ "cross-build-start" ]
 
