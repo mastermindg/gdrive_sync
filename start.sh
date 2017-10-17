@@ -36,11 +36,12 @@ function checkforfolders {
 
 
 function startit {
-	echo "Pulling the most recent Docker image...this may take a bit"
+	echo "Pulling the most recent Docker image, this may take a bit..."
 	docker pull $image > /dev/null 2>&1
 	# Get the localfolder for mounting from the config
 	mymount=$(grep localfolder config.json | awk -F ":" '{print $2}' | xargs echo -n)
 	# Docker will create the path if it's not there
+	echo "Starting up the container now..."
 	docker run -d --name gdrive_sync --restart always -v $PWD/config.json:/root/config.json -v "$mymount":/files $image > /dev/null 2>&1
 }
 
