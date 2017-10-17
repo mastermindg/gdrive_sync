@@ -43,7 +43,7 @@ function startit {
 	mymount=$(grep localfolder config.json | awk -F ":" '{print $2}' | xargs echo -n)
 	# Docker will create the path if it's not there
 	echo "Starting up the container now..."
-	docker run -d --name gdrive_sync --restart always -v $PWD/config.json:/root/config.json -v "$mymount":/files $image > /dev/null 2>&1
+	docker run -d --name gdrive_sync --restart always -v $PWD/config.json:/root/config.json:ro -v "$mymount":/files $image > /dev/null 2>&1
 }
 
 function buildit {
