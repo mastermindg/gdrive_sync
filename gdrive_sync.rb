@@ -63,7 +63,6 @@ puts 'Starting the script...'
 loop do
   puts "\tChecking for new files..."
   entries = Dir["#{foldersync}/*"]
-  puts entries.inspect
   unless entries.count == 0
     folders = Dir.glob("#{foldersync}/*").select {|f| File.directory? f}
     folders.each do |folder|
