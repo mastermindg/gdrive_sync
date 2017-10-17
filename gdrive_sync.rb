@@ -3,7 +3,11 @@ require 'json'
 require 'csv'
 
 # Get the Google Drive subfolder to upload files to
-googlefolder = CSV.parse('folders.csv')['googlefolder']
+CSV.foreach('folders.csv') do |row|
+  if row[0] == 'googlefolder'
+    $googlefolder = row[1]
+  end
+end
 
 foldersync = '/files'
 
@@ -64,12 +68,12 @@ loop do
     folders = Dir.glob("#{foldersync}/*").select {|f| File.directory? f}
     folders.each do |folder|
       puts "\t\t#{folder} is a folder. Recursively uploading it if it's ready"
-      uploadFolder(folder,foldersync,googlefolder)
+      uploadFolder(folder,foldersync,$googlefolder)
     end
     files = Dir.glob("#{foldersync}/*").select {|f| File.file? f}
     files.each do |file|
       puts "\t\tUploading file #{file} if it's ready"
-      uploadFile(file,foldersync,googlefolder)
+      uploadFile(file,foldersync,$googlefolder)
     end
   end 
   sleep 5
