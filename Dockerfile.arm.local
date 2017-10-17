@@ -1,0 +1,13 @@
+FROM mastermindg/docker-rpi-ruby
+
+RUN mkdir /files
+VOLUME /files
+
+WORKDIR /root
+COPY Gemfile .
+COPY Gemfile.lock .
+RUN gem install bundler
+RUN bundle
+ADD . .
+
+CMD ruby /root/gdrive_sync.rb
