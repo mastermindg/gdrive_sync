@@ -83,10 +83,9 @@ if [ $? -eq 0 ]; then
 	echo "Your config is all set for syncing! Let's see what you want to sync..."
 	checkforfolders
 	echo "Your folders are set now! Let's start..."
-	#startit
+	startit
 else
 	echo "You need to authenticate to get started..."
-	#buildit
 	docker run -it --rm -v $PWD/config.json:/root/config.json $image ruby firstrun.rb
 	if [ $? -eq 0 ]; then
 		echo "Great...let's check the config again jic"
