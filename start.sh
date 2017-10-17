@@ -13,8 +13,8 @@ function issues {
 	exit 1
 }
 
-# Check if subfolder is in the config for uploading to a specific folder
-function checkforfolder {
+# Check if subfolder is in the config for uploading to a specific Google Drive folder
+function checkforgooglefolder {
 	if [ ! -f nosubfolder ]; then
 		grep -q subfolder config.json
 		if [ $? -ne 0 ]; then
@@ -27,19 +27,32 @@ function checkforfolder {
 				echo "Which folder would you like to upload to?:"
 				read subfolder
 				sed -i '$ d' config.json
-				echo -e "  \x22subfolder\x22: \x22$subfolder\x22\n}" >> config.json
+				echo -e "  \x22subfolder\x22: \x22$subfolder\x22," >> config.json
 				sed -i '/.*refresh_token/ s/$/,/' config.json
-				echo "Make sure to add the folder in your Google Drive if it's not already there."
-				echo "Files will be dropped in the root of your drive if the folder isn't there!"
 			fi
 		fi
 	fi
 }
 
+# Check if local is in the config for syncing from a specific local folder
+function checkforlocalfolder {
+	if [ ! -f nosubfolder ]; then
+		grep -q localfolder config.json
+		if [ $? -ne 0 ]; then
+			echo "Which folder do you want to sync to Google Drive? i.e. /myshare/files"
+			read localfolder
+			sed -i '$ d' config.json  # Delete the last line
+			echo -e "  \x22localfolder\x22: \x22$localfolder\x22\n}" >> config.json
+			#sed -i '/.*subfolder/ s/$/,/' config.json
+		fi
+	fi
+}
+
+
 function startit {
 	echo "Let's get ready to start it!"
-	echo "Which folder do you want to sync to Google Drive?: i.e. /myshare/files"
-	read mymount
+	#echo "Which folder do you want to sync to Google Drive?: i.e. /myshare/files"
+	#read mymount
 	docker pull $image > /dev/null 2>&1
 	# Docker will create the path if it's not there
 	docker run -d --name gdrive_sync --restart always -v $PWD/config.json:/root/config.json -v "$mymount":/files $image > /dev/null 2>&1
@@ -80,10 +93,10 @@ docker rm gdrive_sync > /dev/null 2>&1
 # Check if config.json has been updated by first run
 grep -q "refresh_token" config.json
 if [ $? -eq 0 ]; then
-	echo "Your config is all set! Let's continue..."
-	checkforfolder
-	#buildit
-	startit
+	echo "Your config is all set for syncing! Let's see what you want to sync..."
+	checkforgooglefolder
+	checkforlocalfolder
+	#startit
 else
 	echo "You need to authenticate to get started..."
 	#buildit
@@ -92,8 +105,8 @@ else
 		echo "Great...let's check the config again jic"
 		grep -q "refresh_token" config.json
 		if [ $? -eq 0 ]; then
-			checkforfolder
-			#buildit
+			checkforgooglefolder
+			checkforlocalfolder
 			startit
 		else
 			issues
