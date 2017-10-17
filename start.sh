@@ -38,9 +38,8 @@ function checkforfolders {
 function startit {
 	docker pull $image > /dev/null 2>&1
 	# Get the localfolder for mounting from the config
-	#mymount=$( 
-	sed -n 's/.*"localfolder": "\(.*\)",/\1/p' config.json #)
-	#echo $mymount
+	mymount=$(grep localfolder config.json | awk -F ":" '{print $2}' | xargs echo -n)
+	echo $mymount
 	# Docker will create the path if it's not there
 	#docker run -d --name gdrive_sync --restart always -v $PWD/config.json:/root/config.json -v "$mymount":/files $image > /dev/null 2>&1
 }
