@@ -2,3 +2,5 @@ files
 .git
 doc
 start.sh
+folders.csv
+config.json
