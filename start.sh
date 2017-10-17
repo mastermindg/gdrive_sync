@@ -41,7 +41,7 @@ function checkforlocalfolder {
 		if [ $? -ne 0 ]; then
 			echo "Which folder do you want to sync to Google Drive? i.e. /myshare/files"
 			read localfolder
-			sed -i '$ d' config.json  # Delete the last line
+			#sed -i '$ d' config.json  # Delete the last line
 			echo -e "  \x22localfolder\x22: \x22$localfolder\x22\n}" >> config.json
 			#sed -i '/.*subfolder/ s/$/,/' config.json
 		fi
