@@ -13,24 +13,27 @@ function issues {
 	exit 1
 }
 
-# Google Drive and Local Folder are stored in the config
-# Check the config and if they're not there then prompt 
-# and add them
+# Google Drive and Local Folder are stored locally in csv
+# so we don't have to ask everytime and so the container
+# can start on boot
+# Check to see if they are set and add them if necessary
 function checkforfolders {
-	grep -q subfolder config.json
-	if [ $? -ne 0 ]; then
-		echo "Which folder would you like to upload to?:"
-		read subfolder
-		sed -i '$ d' config.json
-		echo -e "  \x22subfolder\x22: \x22$subfolder\x22," >> config.json
-		sed -i '/.*refresh_token/ s/$/,/' config.json
+	if [ ! -f folders.csv ]; then
+		echo "folder,name" > folders.csv
 	fi
 
-	grep -q localfolder config.json
+	grep -q googlefolder folders.csv
+	if [ $? -ne 0 ]; then
+		echo "Which folder would you like to upload to?:"
+		read googlefolder
+		echo "googlefolder,$googlefolder" >> folders.csv
+	fi
+
+	grep -q localfolder folders.csv
 	if [ $? -ne 0 ]; then
 		echo "Which local folder do you want to sync to Google Drive? i.e. /myshare/files"
 		read localfolder
-		echo -e "  \x22localfolder\x22: \x22$localfolder\x22\n}" >> config.json
+		echo "localfolder,$localfolder" >> folders.csv
 	fi
 	echo -e "\tYour folders are set now! Let's start..."
 }
@@ -40,7 +43,9 @@ function startit {
 	echo "Pulling the most recent Docker image, this may take a bit..."
 	docker pull $image > /dev/null 2>&1
 	# Get the localfolder for mounting from the config
-	mymount=$(grep localfolder config.json | awk -F ":" '{print $2}' | xargs echo -n)
+	mymount=$(grep localfolder config.json | awk -F "," '{print $2}' | xargs echo -n)
+	echo $mymount
+	exit
 	# Docker will create the path if it's not there
 	echo "Starting up the container now..."
 	docker run -d --name gdrive_sync --restart always -v $PWD/config.json:/root/config.json:ro -v "$mymount":/files $image > /dev/null 2>&1
