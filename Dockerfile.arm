@@ -9,7 +9,8 @@ WORKDIR /root
 COPY Gemfile .
 COPY Gemfile.lock .
 RUN gem install bundler
-RUN bundle install
+RUN bundle
+ADD . .
 
 RUN [ "cross-build-end" ]
 
