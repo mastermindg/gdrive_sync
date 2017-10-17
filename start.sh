@@ -32,6 +32,7 @@ function checkforfolders {
 		read localfolder
 		echo -e "  \x22localfolder\x22: \x22$localfolder\x22\n}" >> config.json
 	fi
+	echo -e "\tYour folders are set now! Let's start..."
 }
 
 
@@ -82,7 +83,6 @@ grep -q "refresh_token" config.json
 if [ $? -eq 0 ]; then
 	echo "Your config is all set for syncing! Let's see what you want to sync..."
 	checkforfolders
-	echo "Your folders are set now! Let's start..."
 	startit
 else
 	echo "You need to authenticate to get started..."
