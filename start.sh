@@ -43,7 +43,7 @@ function startit {
 	echo "Pulling the most recent Docker image, this may take a bit..."
 	docker pull $image > /dev/null 2>&1
 	# Get the localfolder for mounting from the config
-	mymount=$(grep localfolder config.json | awk -F "," '{print $2}' | xargs echo -n)
+	mymount=$(grep localfolder folders.csv | awk -F "," '{print $2}' | xargs echo -n)
 	echo $mymount
 	exit
 	# Docker will create the path if it's not there
