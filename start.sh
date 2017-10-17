@@ -40,6 +40,7 @@ function startit {
 	echo "Let's get ready to start it!"
 	echo "Which folder do you want to sync to Google Drive?: i.e. /myshare/files"
 	read mymount
+	docker pull $image
 	# Docker will create the path if it's not there
 	docker run -d --name gdrive_sync --restart always -v "$mymount":/files $image > /dev/null 2>&1
 }
