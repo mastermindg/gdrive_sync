@@ -37,11 +37,12 @@ function checkforfolders {
 
 function startit {
 	echo "Let's get ready to start it!"
-	#echo "Which folder do you want to sync to Google Drive?: i.e. /myshare/files"
-	#read mymount
 	docker pull $image > /dev/null 2>&1
+	# Get the localfolder for mounting from the config
+	mymount=$( sed -n 's/.*"localfolder": "\(.*\)",/\1/p' config.json )
+	echo $mymount
 	# Docker will create the path if it's not there
-	docker run -d --name gdrive_sync --restart always -v $PWD/config.json:/root/config.json -v "$mymount":/files $image > /dev/null 2>&1
+	#docker run -d --name gdrive_sync --restart always -v $PWD/config.json:/root/config.json -v "$mymount":/files $image > /dev/null 2>&1
 }
 
 function buildit {
@@ -81,6 +82,7 @@ grep -q "refresh_token" config.json
 if [ $? -eq 0 ]; then
 	echo "Your config is all set for syncing! Let's see what you want to sync..."
 	checkforfolders
+	echo "Your folders are set now! Let's start..."
 	#startit
 else
 	echo "You need to authenticate to get started..."
