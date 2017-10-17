@@ -40,8 +40,8 @@ function checkforfolders {
 
 
 function startit {
-	echo "Pulling the most recent Docker image, this may take a bit..."
-	docker pull $image > /dev/null 2>&1
+	#echo "Pulling the most recent Docker image, this may take a bit..."
+	#docker pull $image > /dev/null 2>&1
 	# Get the localfolder for mounting from the config
 	mymount=$(grep localfolder folders.csv | awk -F "," '{print $2}' | xargs echo -n)
 	# Docker will create the path if it's not there
@@ -54,7 +54,7 @@ function buildit {
 	uname -a | grep -q armv
 	if [ $? -eq 0 ]; then
 		echo "You're running on ARM. Let's build an image for you..."
-		docker build -f Dockerfile.arm -t gdrive_sync . > /dev/null 2>&1
+		docker build -f Dockerfile.arm.local -t gdrive_sync . > /dev/null 2>&1
 	else
 		echo "You're running on x86. Let's build an image for you..."
 		docker build -f Dockerfile.x86 -t gdrive_sync . > /dev/null 2>&1
@@ -80,6 +80,8 @@ fi
 echo "Cleaning up any running containers"
 docker stop gdrive_sync > /dev/null 2>&1
 docker rm gdrive_sync > /dev/null 2>&1
+
+buildit
 
 # Check if config.json has been updated by first run
 grep -q "refresh_token" config.json
