@@ -63,7 +63,6 @@ function buildit {
 	if [ $? -eq 0 ]; then
 		echo -e "\tDocker image has been built"
 	else
-		echo -e "\tSomthing went wrong with the build"
 		issues
 	fi
 }
@@ -91,7 +90,7 @@ if [ $? -eq 0 ]; then
 	startit
 else
 	echo "You need to authenticate to get started..."
-	docker run -it --rm -v $PWD/config.json:/root/config.json gdrive_sync bash #$ruby firstrun.rb
+	docker run -it --rm -v $PWD/config.json:/root/config.json gdrive_sync ruby firstrun.rb
 	if [ $? -eq 0 ]; then
 		echo "Great...let's check the config again jic"
 		grep -q "refresh_token" config.json
