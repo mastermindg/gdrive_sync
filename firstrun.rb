@@ -6,3 +6,4 @@ puts
 puts "Follow the instructions below:"
 puts
 session = GoogleDrive::Session.from_config("config.json")
+sleep 60
