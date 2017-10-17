@@ -3,8 +3,7 @@ require 'json'
 require 'csv'
 
 # Get the Google Drive subfolder to upload files to
-config = File.read('config.json')
-googlefolder = CSV.parse(folders.csv)['googlefolder']
+googlefolder = CSV.parse('folders.csv')['googlefolder']
 
 foldersync = '/files'
 
